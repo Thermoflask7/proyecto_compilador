@@ -24,6 +24,8 @@ pattern = re.compile(
     r'(?P<whitespace>\s)|'
     r'(?P<unknown>.)'
 )
+
+#returns a list of tokens
 def analisis_lexico(file_path):
     with open(file_path, 'r') as f:
         text = f.readlines()

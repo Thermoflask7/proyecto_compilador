@@ -1,15 +1,17 @@
 var int x;
 var int y;
 var bool activo;
+
 x = 10;
 y = 0;
 activo = true;
+
 while (x > 0 && activo) {
-y = y + x;
-x = x - 1;
-if (y >= 30) {
-activo = false;
-} else {
-print(y);
-}
+    y = y + x;
+    x = x - 1;
+    if (y >= 30) {
+        activo = false;
+    } else {
+        print(y);
+    }
 }

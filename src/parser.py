@@ -1,6 +1,8 @@
 import main
 
 def read(terminal, estado):
+    if len(main.tokens) == 0:
+        return False
     if estado:
         if main.tokens[0][0] == terminal:
             main.tokens.pop(0)
@@ -14,11 +16,15 @@ def read(terminal, estado):
 
 def program():
     if not item_list(): raise Exception
-    #end of file
+    
+    if not read("EOF", True):
+        raise Exception("Expected EOF")
+    
+    return True
 
 def item_list():
-    if item():
-        if not item_list(): raise Exception
+    while item():
+        pass
     return True
 
 def item():
@@ -44,7 +50,7 @@ def type():
 def stmt():
     if assign():
         if read(";", True): return True
-    elif print():
+    elif print_stmt():
         if read(";", True): return True
     elif if_stmt(): return True
     elif while_stmt(): return True
@@ -65,7 +71,7 @@ def assign():
                 return True
     return False
 
-def print():
+def print_stmt():
     if read("print", True):
         if read("(", True):
             if expr():
@@ -104,8 +110,7 @@ def expr():
 
 def logic_or():
     if logic_and():
-        if logic_or_loop():
-            return True
+        logic_or_loop()
         return True
     return False
 
@@ -116,12 +121,11 @@ def logic_or_loop():
                 return True
             return True
         raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
-    return False
+    return True
 
 def logic_and():
     if equality():
-        if logic_and_loop():
-            return True
+        logic_and_loop()
         return True
     return False
 
@@ -154,8 +158,7 @@ def relation():
 
 def term():
     if factor():
-        if term_loop():
-            return True
+        term_loop()
         return True
     return False
 
@@ -166,7 +169,7 @@ def term_loop():
                 return True
             return True
         raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
-    return False
+    return True
 
 def factor():
     if unary():
@@ -182,7 +185,7 @@ def factor_loop():
                 return True
             return True
         raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
-    return False
+    return True
 
 def unary():
     if read("!", True) or read("-", True):

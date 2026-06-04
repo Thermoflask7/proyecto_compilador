@@ -49,4 +49,5 @@ def analisis_lexico(file_path):
                         raise  Exception(f'Invalid Float number format. Line: {line_counter}, Column: {column}')
                     else:        
                         tokens.append((string, token, [line_counter, column]))
+    tokens.append(("EOF", "EOF", []))
     return(tokens)

@@ -1,9 +1,10 @@
 import main
+import ast
 
-def consume(terminal, estado):
+def consume(terminal, state):
     if len(main.tokens) == 0:
         return False
-    if estado:
+    if state:
         if main.tokens[0][0] == terminal:
             main.tokens.pop(0)
             return True
@@ -54,7 +55,7 @@ def decl():
     return False 
 
 def type():
-    if consume("int",True): return True
+    if consume("int", True): return True
     elif consume("float", True): return True
     elif consume("bool", True): return True
     elif consume("string", True): return True

@@ -5,12 +5,12 @@ def read(terminal, estado):
         if main.tokens[0][0] == terminal:
             main.tokens.pop(0)
             return True
-        else: return False
+        return False
     else:
         if main.tokens[0][1] == terminal:
             main.tokens.pop(0)
             return True
-        else: return False
+        return False
 
 def program():
     if not item_list(): raise Exception
@@ -19,13 +19,12 @@ def program():
 def item_list():
     if item():
         if not item_list(): raise Exception
-        return True
-    else: return True
+    return True
 
 def item():
     if decl(): return True
     elif stmt(): return True
-    else: return False
+    return False
 
 def decl():
     if read("var", True):
@@ -36,52 +35,171 @@ def decl():
     return False 
 
 def type():
-    pass
+    if read("int",True): return True
+    elif read("float", True): return True
+    elif read("bool", True): return True
+    elif read("string", True): return True
+    return False
 
 def stmt():
-    pass
+    if assign():
+        if read(";", True): return True
+    elif print():
+        if read(";", True): return True
+    elif if_stmt(): return True
+    elif while_stmt(): return True
+    elif block(): return True
+    return False
 
 def block():
-    pass
+    if read("{", True):
+        if item_list():
+            if read("}", True):
+                return True
+    return False
 
 def assign():
-    pass
+    if read("id", False):
+        if read("=", True):
+            if expr():
+                return True
+    return False
 
 def print():
-    pass
+    if read("print", True):
+        if read("(", True):
+            if expr():
+                if read(")", True):
+                    return True
+    return False
 
 def if_stmt():
-    pass
+    if read("if", True):
+        if read("(", True):
+            if expr():
+                if read(")", True):
+                    if block():
+                        if else_part():
+                            return True
+    return False
 
 def else_part():
-    pass
+    if read("else", True):
+        if not block(): raise Exception
+    return True
+    
 
 def while_stmt():
-    pass
+    if read("while", True):
+        if read("(", True):
+            if expr():
+                if read(")", True):
+                    if block():
+                        return True
+    return False
 
 def expr():
     if not logic_or(): raise Exception
+    return True
 
 def logic_or():
-    pass
+    if logic_and():
+        if logic_or_loop():
+            return True
+        return True
+    return False
+
+def logic_or_loop():
+    if read("||", True):
+        if logic_and():
+            if logic_or_loop():
+                return True
+            return True
+        raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
+    return False
 
 def logic_and():
-    pass
+    if equality():
+        if logic_and_loop():
+            return True
+        return True
+    return False
+
+def logic_and_loop():
+    if read("&&", True):
+        if equality():
+            if logic_and_loop():
+                return True
+            return True
+        raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
+    return True
 
 def equality():
-    pass
+    if relation():
+        if read("==", True) or read("!=", True):
+            if not relation():
+                raise Exception
+            return True
+        return True
+    return False
 
 def relation():
-    pass
+    if term():
+        if read("<", True) or read("<=", True) or read(">", True) or read(">=", True):
+            if not term():
+                raise Exception
+            return True
+        return True
+    return False
 
 def term():
-    pass
+    if factor():
+        if term_loop():
+            return True
+        return True
+    return False
+
+def term_loop():
+    if read("+", True) or read("-", True):
+        if factor():
+            if term_loop():
+                return True
+            return True
+        raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
+    return False
 
 def factor():
-    pass
+    if unary():
+        if factor_loop():
+            return True
+        return True
+    return False
+
+def factor_loop():
+    if read("*", True) or read("/", True):
+        if unary():
+            if factor_loop():
+                return True
+            return True
+        raise Exception #no estoy 100% seguro si aqui es raise Exception o False pero creo que es Exception pq no hay otra posibilidad
+    return False
 
 def unary():
-    pass
+    if read("!", True) or read("-", True):
+        if unary():
+            return True
+        return False
+    elif primary():
+        return True
+    return False
 
 def primary():
-    pass
+    if read("int", False) or read("float", False) or read("string", False) or read("true", True) or read("false", True) or read("id", False):
+        return True 
+    if read("(", True):
+        if expr():
+            if read(")", True):
+                return True
+            return False
+        return False
+    return False

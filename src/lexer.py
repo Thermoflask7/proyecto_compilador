@@ -38,7 +38,7 @@ def analisis_lexico(file_path):
         for match in pattern.finditer(line):
             for token, string in match.groupdict().items():
                 if string is not None:
-                    column = line.index(string) + 1
+                    column = line.index(string) + 1 #BUG, index solo agarra el primer valor asi que x = x + 1 daria 2 columnas iguales
                     if token == "whitespace" or token == "comment":
                         pass
                     elif token == "unknown":

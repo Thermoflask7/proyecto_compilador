@@ -1,0 +1,9 @@
+var int x;
+var int y;
+x = 2;
+y = x + 3;
+if (y > 4) {
+print(y);
+} else {
+print(0);
+}

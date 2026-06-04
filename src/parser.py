@@ -1,29 +1,30 @@
-import main
 import ast
+tokens = None
+
 
 def consume(terminal, state):
-    if len(main.tokens) == 0:
+    if len(tokens) == 0:
         return False
     if state:
-        if main.tokens[0][0] == terminal:
-            main.tokens.pop(0)
+        if tokens[0][0] == terminal:
+            tokens.pop(0)
             return True
         return False
     else:
-        if main.tokens[0][1] == terminal:
-            main.tokens.pop(0)
+        if tokens[0][1] == terminal:
+            tokens.pop(0)
             return True
         return False
 
 def peek_literal():
-    if len(main.tokens) == 0:
+    if len(tokens) == 0:
         return None
-    return main.tokens[0][0]
+    return tokens[0][0]
 
 def peek_type():
-    if len(main.tokens) == 0:
+    if len(tokens) == 0:
         return None
-    return main.tokens[0][1]
+    return tokens[0][1]
 
 
 

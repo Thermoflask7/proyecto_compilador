@@ -51,3 +51,5 @@ def analisis_lexico(file_path):
                         tokens.append((string, token, [line_counter, column]))
     tokens.append(("EOF", "EOF", []))
     return(tokens)
+
+analisis_lexico("file.txt")

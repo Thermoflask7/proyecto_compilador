@@ -9,6 +9,9 @@ class Node:
         self.children.append(node)
 
     def print_tree(self, level=0):
-        print("  " * level + f"{self.category}: {self.value}")
+        if self.value is not None:
+            print("  " * level + f"{self.category}: {self.value}")
+        else:
+            print("  " * level + f"{self.category}")
         for child in self.children:
             child.print_tree(level + 1)
